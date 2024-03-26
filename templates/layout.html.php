@@ -24,8 +24,7 @@
                                 <a class="nav-link <?php if($page == 'creer-formulaire'){echo 'active';} ?>" href="/">Créer un formulaire</a>
                             </div>
                             <div class="navbar-nav">
-                                <a class="nav-link <?php if($page == 'connexion'){echo 'active';} ?>" href="?page=connexion">Connexion</a>
-                                <a class="btn btn-primary" href="?page=inscription">Inscription</a>
+                                <a class="btn btn-primary" href="/?page=<?= !empty($_SESSION['customer_id']) ? 'profil' : 'connexion' ?>"><?= !empty($_SESSION['customer_id']) ? $_SESSION['customer_pseudo'] : 'Connexion' ?></a>
                             </div>
                         </div>
                     </div>
@@ -40,7 +39,7 @@
     </main>
     <footer class="footer mt-auto bg-dark py-4">
         <div class="container text-center">
-            <p class="text-white mb-0">© <?php echo date("Y"); ?> Strawpoll. Tous droits réservés.</p>
+            <p class="text-white mb-0">© <?php echo date("Y"); ?> <a href="https://github.com/NicolasCoquatrix" target="_blank" class="link-light">Nicolas Coquatrix</a> - Tous droits réservés.</p>
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -30,6 +30,7 @@ function createAlert(box, alertBoxId, alertId, label, message, importance) {
   alertDiv.appendChild(messageText);
 
   let closeButton = document.createElement("button");
+  closeButton.id = alertId + "Close";
   closeButton.className = "p-2 btn-close cursor-pointer";
   closeButton.addEventListener("click", function (e) {
     alertDiv.remove();
@@ -675,7 +676,7 @@ CGU.addEventListener("change", function (e) {
 const registrationBox = document.querySelector("#registrationBox");
 const registrationAlert = document.querySelector("#registrationAlert");
 
-if (!registrationAlert == null) {
+if (registrationAlert != null) {
 }
 
 const formSubmit = document.querySelector("#formSubmit");

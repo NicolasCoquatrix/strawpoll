@@ -6,7 +6,7 @@
             <div class="card-header">
                 <h1 class="mb-0 text-center">Inscription</h1>
             </div>
-            <form action="../src/scripts/add-user.php" method="POST" id="form" name="form">
+            <form action="/?page=inscription" method="POST" id="form" name="form">
                 <div class="card-body">
 
                     <!-- PSEUDO -->
@@ -121,7 +121,7 @@
                     <input type="hidden" name="hidden_submit" required>
 
                     <!-- LIEN PAGE CONNEXION -->
-                    <a href="?page=connexion" target="_blank" class="btn btn-secondary w-100">Déjà un compte ?</a>
+                    <a href="?page=connexion" class="btn btn-secondary w-100">Déjà un compte ?</a>
 
                     <!-- BOUTON ENVOYER -->
                     <button type="submit" class="btn btn-primary w-100" name="form_submit" id="formSubmit">S'inscrire</button>
