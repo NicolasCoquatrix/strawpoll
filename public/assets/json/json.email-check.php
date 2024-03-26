@@ -1,5 +1,6 @@
 <?php
 
+$dbPath = '../../../src/data/db.sqlite';
 require '../../../src/data/db-connect.php';
 
 if(isset($_GET['email'])){

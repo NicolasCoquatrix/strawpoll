@@ -1,3 +1,5 @@
+
+// FONCTIONS "ALERTES"
 function resetAlerts(alertBoxId) {
   let alertBox = document.querySelector("#" + alertBoxId);
   if (alertBox != null) {
@@ -5,7 +7,7 @@ function resetAlerts(alertBoxId) {
   }
 }
 
-function createAlert(box, alertBoxId, alertId, message) {
+function createAlert(box, alertBoxId, alertId, label, message, importance) {
   let alertBox = document.querySelector("#" + alertBoxId);
   if (alertBox == null) {
     alertBox = document.createElement("div");
@@ -16,13 +18,13 @@ function createAlert(box, alertBoxId, alertId, message) {
   let alertDiv = document.createElement("div");
   alertDiv.id = alertId;
   alertDiv.className =
-    "mb-1 py-1 gap-2 alert alert-warning d-flex justify-content-between";
+    "mb-1 py-1 gap-2 alert alert-" + importance + " d-flex justify-content-between";
 
   let messageText = document.createElement("p");
   messageText.className = "m-1";
   let messageLabel = document.createElement("span");
   messageLabel.className = "fw-bold";
-  messageLabel.innerHTML = "Attention : ";
+  messageLabel.innerHTML = label + " : ";
   messageText.appendChild(messageLabel);
   messageText.innerHTML += message;
   alertDiv.appendChild(messageText);
@@ -38,6 +40,7 @@ function createAlert(box, alertBoxId, alertId, message) {
   box.appendChild(alertBox);
 }
 
+// FONCTIONS "PSEUDO"
 async function checkExistingPseudo() {
   try {
     const answer = await fetch(
@@ -51,7 +54,7 @@ async function checkExistingPseudo() {
   }
 }
 
-async function checkPseudo(pseudoBox, pseudo, pseudoSate) {
+async function checkPseudo(pseudoBox, pseudo, pseudoSate, submit) {
   resetAlerts("pseudoAlertBox");
 
   let errors = 0;
@@ -63,7 +66,9 @@ async function checkPseudo(pseudoBox, pseudo, pseudoSate) {
         pseudoBox,
         "pseudoAlertBox",
         "pseudoLengthAlert",
-        "Le pseudo doit comporter entre 3 et 20 caractères."
+        "Attention",
+        "Le pseudo doit comporter entre 3 et 20 caractères.",
+        "warning"
       );
     }
 
@@ -73,7 +78,9 @@ async function checkPseudo(pseudoBox, pseudo, pseudoSate) {
         pseudoBox,
         "pseudoAlertBox",
         "pseudoFormatAlert",
-        "Le pseudo ne peux comporter que des lettres, des chiffres et le caractère spécial (_)."
+        "Attention",
+        "Le pseudo ne peux comporter que des lettres, des chiffres et le caractère spécial ( _ ).",
+        "warning"
       );
     }
 
@@ -85,21 +92,28 @@ async function checkPseudo(pseudoBox, pseudo, pseudoSate) {
           pseudoBox,
           "pseudoAlertBox",
           "pseudoExistingAlert",
-          "Ce pseudo est déjà utilisé."
+          "Attention",
+          "Ce pseudo est déjà utilisé.",
+          "warning"
         );
       }
     } catch (error) {
       console.error("Une erreur s'est produite : ", error);
       throw error;
     }
-  } else {
+  } else if (submit == true) {
     errors++;
     createAlert(
       pseudoBox,
       "pseudoAlertBox",
       "pseudoObligatoryAlert",
-      "Le champ pseudo est obligatoire."
+      "Attention",
+      "Le champ pseudo est obligatoire.",
+      "warning"
     );
+  } else {
+    pseudoSate.className = "mb-2 px-3 py-0 alert alert-light";
+    return false;
   }
 
   if (errors == 0) {
@@ -115,13 +129,14 @@ function checkPseudoLength(pseudo, pseudoLength) {
   pseudoLength.innerHTML = pseudo.value.length + "/20";
   if (pseudo.value.length >= 3 && pseudo.value.length <= 20) {
     pseudoLength.className = "mb-2 py-0 alert alert-success ";
-    return true;
-  } else {
+  } else if(pseudo.value.length > 0) {
     pseudoLength.className = "mb-2 py-0 alert alert-warning";
-    return false;
+  } else {
+    pseudoLength.className = "mb-2 py-0 alert alert-light";
   }
 }
 
+// FONCTIONS "EMAIL"
 async function checkExistingEmail() {
   try {
     const answer = await fetch(
@@ -135,7 +150,7 @@ async function checkExistingEmail() {
   }
 }
 
-async function checkEmail(emailBox, email, emailSate) {
+async function checkEmail(emailBox, email, emailSate, submit) {
   resetAlerts("emailAlertBox");
 
   let errors = 0;
@@ -151,7 +166,9 @@ async function checkEmail(emailBox, email, emailSate) {
         emailBox,
         "emailAlertBox",
         "emailFormatAlert",
-        "Le format de l'adresse mail est invalide."
+        "Attention",
+        "Le format de l'adresse mail est invalide.",
+        "warning"
       );
     }
 
@@ -163,21 +180,28 @@ async function checkEmail(emailBox, email, emailSate) {
           emailBox,
           "emailAlertBox",
           "emailExistingAlert",
-          "Cet email est déjà utilisé."
+          "Attention",
+          "Cet email est déjà utilisé.",
+          "warning"
         );
       }
     } catch (error) {
       console.error("Une erreur s'est produite : ", error);
       throw error;
     }
-  } else {
+  } else if (submit == true) {
     errors++;
     createAlert(
       emailBox,
       "emailAlertBox",
       "emailObligatoryAlert",
-      "Le champ email est obligatoire."
+      "Attention",
+      "Le champ email est obligatoire.",
+      "warning"
     );
+  } else {
+    emailSate.className = "mb-2 px-3 py-0 alert alert-light";
+    return false;
   }
 
   if (errors == 0) {
@@ -189,7 +213,9 @@ async function checkEmail(emailBox, email, emailSate) {
   }
 }
 
-function checkPassword(passwordBox, password, passwordSate) {
+
+// FONCTIONS "MOT DE PASSE"
+function checkPassword(passwordBox, password, passwordSate, submit) {
   resetAlerts("passwordAlertBox");
 
   let errors = 0;
@@ -201,7 +227,9 @@ function checkPassword(passwordBox, password, passwordSate) {
         passwordBox,
         "passwordAlertBox",
         "passwordLengthAlert",
-        "Le mot de passe doit comporter entre 8 et 40 caractères."
+        "Attention",
+        "Le mot de passe doit comporter entre 8 et 40 caractères.",
+        "warning"
       );
     }
 
@@ -215,17 +243,24 @@ function checkPassword(passwordBox, password, passwordSate) {
         passwordBox,
         "passwordAlertBox",
         "passwordFormatAlert",
-        "Le mot de passe doit contenir au minimum : une minuscule, une majuscule, un chiffre et un caractère spécial (#,?,!,@,$,%,^,&,*,-)."
+        "Attention",
+        "Le mot de passe doit contenir au minimum : une minuscule, une majuscule, un chiffre et un caractère spécial ( # , ? , ! , @ , $ , % , ^ , & , * , - ).",
+        "warning"
       );
     }
-  } else {
+  } else if (submit == true) {
     errors++;
     createAlert(
       passwordBox,
       "passwordAlertBox",
       "passwordObligatoryAlert",
-      "Le champ mot de passe est obligatoire."
+      "Attention",
+      "Le champ mot de passe est obligatoire.",
+      "warning"
     );
+  } else {
+    passwordSate.className = "mb-2 px-3 py-0 alert alert-light";
+    return false;
   }
 
   if (errors == 0) {
@@ -237,62 +272,96 @@ function checkPassword(passwordBox, password, passwordSate) {
   }
 }
 
-function checkPasswordLength(password, passwordLength) {
+function checkPasswordLength(password, passwordLength, passwordStrengthLabel, passwordStrength) {
   passwordLength.innerHTML = password.value.length + "/40";
   if (password.value.length >= 8 && password.value.length <= 40) {
     passwordLength.className = "mb-2 py-0 alert alert-success ";
-    return true;
-  } else {
+  } else if(password.value.length > 0) {
     passwordLength.className = "mb-2 py-0 alert alert-warning";
-    return false;
+  } else {
+    passwordLength.className = "mb-2 py-0 alert alert-light";
+  }
+
+  if(password.value.length > 0){
+    if (/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password.value)) {
+      if (/^(?=.*?[A-Z]{3})(?=.*?[a-z]{3})(?=.*?[0-9]{3})(?=.*?[#?!@$%^&*-]{3}).{16,}$/.test(password.value)) {
+        passwordStrength.style.width = '100%';
+        passwordStrength.className = "progress-bar bg-success";
+        passwordStrengthLabel.innerHTML = 'Très fort';
+        passwordStrengthLabel.className = "fw-bold text-success";
+      } else if (/^(?=.*?[A-Z]{2})(?=.*?[a-z]{2})(?=.*?[0-9]{2})(?=.*?[#?!@$%^&*-]{2}).{12,}$/.test(password.value)) {
+        passwordStrength.style.width = '75%';
+        passwordStrength.className = "progress-bar bg-success";
+        passwordStrengthLabel.innerHTML = 'Fort';
+        passwordStrengthLabel.className = "fw-bold text-success";
+      } else {
+        passwordStrength.style.width = '50%';
+        passwordStrength.className = "progress-bar bg-warning";
+        passwordStrengthLabel.innerHTML = 'Moyen';
+        passwordStrengthLabel.className = "fw-bold text-warning";
+      }
+      
+    } else {
+      passwordStrength.style.width = '25%';
+      passwordStrength.className = "progress-bar bg-danger";
+      passwordStrengthLabel.innerHTML = 'Insuffisant';
+      passwordStrengthLabel.className = "fw-bold text-danger";
+    }
+  } else {
+    passwordStrength.style.width = '0%';
+    passwordStrength.className = "progress-bar bg-danger";
+    passwordStrengthLabel.innerHTML = '';
+    passwordStrengthLabel.className = "fw-bold";
   }
 }
 
-function checkZipCode(zipCodeBox, zipCode, zipCodeSate) {
-  resetAlerts("zipCodeAlertBox");
+// FONCTIONS "CODE POSTAL"
+function checkAddress(addressBox, address, addressSate) {
+  resetAlerts("addressAlertBox");
 
   let errors = 0;
 
-  if (zipCode.value != "") {
-    if (!/^\d{5}$/.test(zipCode.value)) {
+  if (address.value != "") {
+    if (!/^\d{5}$/.test(address.value)) {
       errors++;
       createAlert(
-        zipCodeBox,
-        "zipCodeAlertBox",
-        "zipCodeAlert",
-        "Le code postal doit comporter entre 5 chiffres."
+        addressBox,
+        "addressAlertBox",
+        "addressFormatAlert",
+        "Attention",
+        "Le code postal doit comporter entre 5 chiffres.",
+        "warning"
       );
     }
 
     if (errors == 0) {
-      zipCodeSate.className = "mb-2 px-3 py-0 alert alert-success";
+      addressSate.className = "mb-2 px-3 py-0 alert alert-success";
       return true;
     } else {
-      zipCodeSate.className = "mb-2 px-3 py-0 alert alert-warning";
+      addressSate.className = "mb-2 px-3 py-0 alert alert-warning";
       return false;
     }
   } else {
-    zipCodeSate.className = "mb-2 px-3 py-0 alert alert-light";
+    addressSate.className = "mb-2 px-3 py-0 alert alert-light";
     return true;
   }
 }
 
+// FONCTIONS "GENRE"
 function checkGender(genderBox, gender, genderSate) {
   resetAlerts("genderAlertBox");
 
   let errors = 0;
 
-  if (
-    gender.id != "genderMan" &&
-    gender.id != "genderWoman" &&
-    gender.id != "genderOther"
-  ) {
+  if ( gender.id != "genderMan" && gender.id != "genderWoman") {
     errors++;
     createAlert(
       genderBox,
       "genderAlertBox",
-      "genderAlert",
-      "Le genre sélecionné n'existe pas."
+      "genderExistingAlert",
+      "Attention",
+      "Le genre sélecionné n'existe pas.",
+      "warning"
     );
   }
 
@@ -305,6 +374,7 @@ function checkGender(genderBox, gender, genderSate) {
   }
 }
 
+// FONCTIONS "DATE DE NAISSANCE"
 function checkBirth(birthBox, birth, birthSate) {
   resetAlerts("birthAlertBox");
 
@@ -317,7 +387,9 @@ function checkBirth(birthBox, birth, birthSate) {
         birthBox,
         "birthAlertBox",
         "birthFormatAlert",
-        "Le format de la date est incorrect."
+        "Attention",
+        "Le format de la date est incorrect.",
+        "warning"
       );
     }
 
@@ -327,7 +399,9 @@ function checkBirth(birthBox, birth, birthSate) {
         birthBox,
         "birthAlertBox",
         "birthDateAlert",
-        "Cette date n'existe pas."
+        "Attention",
+        "Cette date n'existe pas.",
+        "warning"
       );
     }
 
@@ -352,9 +426,11 @@ function checkBirth(birthBox, birth, birthSate) {
           birthBox,
           "birthAlertBox",
           "birthMaxDateAlert",
+          "Attention",
           "Vous avez " +
             age +
-            " ans ... Félicitations, vous avez battu le record de longévité humaine qui était de 122 ans ! Malheureusement, vous ne pouvez pas vous inscrire avant d'avoir inscrit votre nom dans le Guinness Book."
+            " ans ... Félicitations, vous avez battu le record de longévité humaine qui était de 122 ans ! Malheureusement, vous ne pouvez pas vous inscrire avant d'avoir inscrit votre nom dans le Guinness Book.",
+          "warning"
         );
       }
     } else {
@@ -363,7 +439,9 @@ function checkBirth(birthBox, birth, birthSate) {
         birthBox,
         "birthAlertBox",
         "birthFutureAlert",
-        "Vous ne pouvez pas être né dans le futur."
+        "Attention",
+        "Vous ne pouvez pas être né dans le futur.",
+        "warning"
       );
     }
 
@@ -381,18 +459,21 @@ function checkBirth(birthBox, birth, birthSate) {
   }
 }
 
-function checkCGT(CGTBox, CGT) {
-  resetAlerts("CGTAlertBox");
+// FONCTIONS "CONDITIONS GÉNÉRALES D'UTILISATION"
+function checkCGU(CGUBox, CGU) {
+  resetAlerts("CGUAlertBox");
 
   let errors = 0;
 
-  if (!CGT.checked) {
+  if (!CGU.checked) {
     errors++;
     createAlert(
-      CGTBox,
-      "CGTAlertBox",
-      "CGTAlert",
-      "Vous devez avoir lu et accepté les conditions générales d'utilisation pour pouvoir vous inscrire."
+      CGUBox,
+      "CGUAlertBox",
+      "CGUObligatoryAlert",
+      "Attention",
+      "Vous devez avoir lu et accepté les conditions générales d'utilisation pour pouvoir vous inscrire.",
+      "warning"
     );
   }
 
@@ -403,35 +484,77 @@ function checkCGT(CGTBox, CGT) {
   }
 }
 
+// SCRIPTS "PSEUDO"
 const pseudoBox = document.querySelector("#pseudoBox");
 const pseudo = document.querySelector("#pseudo");
 const pseudoSate = document.querySelector("#pseudoSate");
-const pseudoLength = document.querySelector("#pseudoLength");
+
 pseudo.addEventListener("blur", function (e) {
-  checkPseudo(pseudoBox, pseudo, pseudoSate);
+  checkPseudo(pseudoBox, pseudo, pseudoSate, false);
 });
+
+const pseudoLength = document.querySelector("#pseudoLength");
+
 pseudo.addEventListener("input", function (e) {
   checkPseudoLength(pseudo, pseudoLength);
 });
 
+const pseudoInfo = document.querySelector("#pseudoInfo");
+
+pseudoInfo.addEventListener("click", function (e) {
+  resetAlerts("pseudoAlertBox")
+  createAlert(
+    pseudoBox,
+    "pseudoAlertBox",
+    "pseudoInfoAlert",
+    "Info",
+    "Le pseudo doit être unique et comporter entre 3 et 20 caractères alphanumérique, sans espace, le seul caractère spécial autorisé est le ( _ ).",
+    "info"
+  );
+});
+
+// SCRIPTS "EMAIL"
 const emailBox = document.querySelector("#emailBox");
 const email = document.querySelector("#email");
 const emailSate = document.querySelector("#emailSate");
+
 email.addEventListener("blur", function (e) {
-  checkEmail(emailBox, email, emailSate);
+  checkEmail(emailBox, email, emailSate, false);
 });
 
+const emailInfo = document.querySelector("#emailInfo");
+
+emailInfo.addEventListener("click", function (e) {
+  resetAlerts("emailAlertBox")
+  createAlert(
+    emailBox,
+    "emailAlertBox",
+    "emailInfoAlert",
+    "Info",
+    "L'email doit être unique.",
+    "info"
+  );
+});
+
+// SCRIPTS "MOT DE PASSE"
 const passwordBox = document.querySelector("#passwordBox");
 const password = document.querySelector("#password");
 const passwordSate = document.querySelector("#passwordSate");
-const passwordLength = document.querySelector("#passwordLength");
+
 password.addEventListener("blur", function (e) {
-  checkPassword(passwordBox, password, passwordSate);
+  checkPassword(passwordBox, password, passwordSate, false);
 });
+
+const passwordLength = document.querySelector("#passwordLength");
+const passwordStrengthLabel = document.querySelector("#passwordStrengthLabel");
+const passwordStrength = document.querySelector("#passwordStrength");
+
 password.addEventListener("input", function (e) {
-  checkPasswordLength(password, passwordLength);
+  checkPasswordLength(password, passwordLength, passwordStrengthLabel, passwordStrength);
 });
+
 const passwordVisibility = document.querySelector("#passwordVisibility");
+
 passwordVisibility.addEventListener("click", function () {
   if (password.type === "password") {
     password.type = "text";
@@ -444,17 +567,48 @@ passwordVisibility.addEventListener("click", function () {
   }
 });
 
-const zipCodeBox = document.querySelector("#zipCodeBox");
-const zipCode = document.querySelector("#zipCode");
-const zipCodeSate = document.querySelector("#zipCodeSate");
-zipCode.addEventListener("blur", function (e) {
-  checkZipCode(zipCodeBox, zipCode, zipCodeSate);
+const passwordInfo = document.querySelector("#passwordInfo");
+
+passwordInfo.addEventListener("click", function (e) {
+  resetAlerts("passwordAlertBox")
+  createAlert(
+    passwordBox,
+    "passwordAlertBox",
+    "passwordInfoAlert",
+    "Info",
+    "Le mot de passe doit comporter entre 8 et 40 caractères et contenir au minimum : une minuscule, une majuscule, un chiffre et un caractère spécial ( # , ? , ! , @ , $ , % , ^ , & , * , - ).",
+    "info"
+  );
 });
 
+// SCRIPTS "CODE POSTAL"
+const addressBox = document.querySelector("#addressBox");
+const address = document.querySelector("#address");
+const addressSate = document.querySelector("#addressSate");
+
+address.addEventListener("blur", function (e) {
+  checkAddress(addressBox, address, addressSate);
+});
+
+const addressInfo = document.querySelector("#addressInfo");
+
+addressInfo.addEventListener("click", function (e) {
+  resetAlerts("addressAlertBox")
+  createAlert(
+    addressBox,
+    "addressAlertBox",
+    "addressInfoAlert",
+    "Info",
+    "Ce champ est optionnel et sert à établir des statistiques.",
+    "info"
+  );
+});
+
+// SCRIPTS "GENRE"
 const genderBox = document.querySelector("#genderBox");
 const genders = document.querySelectorAll('input[type="radio"]');
 const genderSate = document.querySelector("#genderSate");
-const resetGender = document.querySelector("#resetGender");
+
 genders.forEach((gender) => {
   gender.addEventListener("change", function (e) {
     if (gender.checked) {
@@ -462,6 +616,9 @@ genders.forEach((gender) => {
     }
   });
 });
+
+const resetGender = document.querySelector("#resetGender");
+
 resetGender.addEventListener("click", function (e) {
   genders.forEach((gender) => {
     gender.checked = false;
@@ -469,40 +626,77 @@ resetGender.addEventListener("click", function (e) {
   });
 });
 
+const genderInfo = document.querySelector("#genderInfo");
+
+genderInfo.addEventListener("click", function (e) {
+  resetAlerts("genderAlertBox")
+  createAlert(
+    genderBox,
+    "genderAlertBox",
+    "genderInfoAlert",
+    "Info",
+    "Ce champ est optionnel et sert à établir des statistiques.",
+    "info"
+  );
+});
+
+// SCRIPTS "DATE DE NAISSANCE"
 const birthBox = document.querySelector("#birthBox");
 const birth = document.querySelector("#birth");
 const birthSate = document.querySelector("#birthSate");
+
 birth.addEventListener("blur", function (e) {
   checkBirth(birthBox, birth, birthSate);
 });
 
-const CGTBox = document.querySelector("#CGTBox");
-const CGT = document.querySelector("#CGT");
-CGT.addEventListener("change", function (e) {
-  checkCGT(CGTBox, CGT);
+const birthInfo = document.querySelector("#birthInfo");
+
+birthInfo.addEventListener("click", function (e) {
+  resetAlerts("birthAlertBox")
+  createAlert(
+    birthBox,
+    "birthAlertBox",
+    "birthInfoAlert",
+    "Info",
+    "Ce champ est optionnel et sert à établir des statistiques.",
+    "info"
+  );
 });
 
+// SCRIPTS "CONDITIONS GÉNÉRALES D'UTILISATION"
+const CGUBox = document.querySelector("#CGUBox");
+const CGU = document.querySelector("#CGU");
+
+CGU.addEventListener("change", function (e) {
+  checkCGU(CGUBox, CGU);
+});
+
+// SCRIPTS "ENVOI DU FORMULAIRE"
 const registrationBox = document.querySelector("#registrationBox");
 const registrationAlert = document.querySelector("#registrationAlert");
+
 if (!registrationAlert == null) {
 }
+
 const formSubmit = document.querySelector("#formSubmit");
+
 formSubmit.addEventListener("click", async function (e) {
   e.preventDefault();
+
   let formValidated = true;
   let validatedFields = [];
 
-  validatedFields.push(await checkPseudo(pseudoBox, pseudo, pseudoSate));
-  validatedFields.push(await checkEmail(emailBox, email, emailSate));
-  validatedFields.push(checkPassword(passwordBox, password, passwordSate));
-  validatedFields.push(checkZipCode(zipCodeBox, zipCode, zipCodeSate));
+  validatedFields.push(await checkPseudo(pseudoBox, pseudo, pseudoSate, true));
+  validatedFields.push(await checkEmail(emailBox, email, emailSate, true));
+  validatedFields.push(checkPassword(passwordBox, password, passwordSate, true));
+  validatedFields.push(checkAddress(addressBox, address, addressSate));
   genders.forEach((gender) => {
     if (gender.checked) {
       validatedFields.push(checkGender(genderBox, gender, genderSate));
     }
   });
   validatedFields.push(checkBirth(birthBox, birth, birthSate));
-  validatedFields.push(checkCGT(CGTBox, CGT));
+  validatedFields.push(checkCGU(CGUBox, CGU));
 
   let errors = 0;
 
@@ -523,46 +717,14 @@ formSubmit.addEventListener("click", async function (e) {
   if (formValidated) {
     document.querySelector("#form").submit();
   } else {
-    if (registrationAlert) {
-      registrationAlert.remove();
-    }
-
-    const registrationFailed = document.querySelector("#registrationFailed");
-    if (registrationFailed) {
-      registrationFailed.remove();
-    }
-
-    let newRegistrationFailed = document.createElement("div");
-    newRegistrationFailed.id = "registrationFailed";
-    newRegistrationFailed.className =
-      "mb-0 mt-2 py-1 gap-2 alert alert-danger d-flex justify-content-between";
-
-    let newRegistrationFailedText = document.createElement("p");
-    newRegistrationFailedText.className = "m-1";
-
-    let newRegistrationFailedLabel = document.createElement("span");
-    newRegistrationFailedLabel.className = "fw-bold";
-    newRegistrationFailedLabel.innerText =
-      "Erreur lors de l'envoi du formulaire : ";
-
-    let newRegistrationFailedErrors = document.createElement("span");
-    newRegistrationFailedErrors.className = "fw-bold";
-    newRegistrationFailedErrors.innerText = errorsPrint;
-
-    newRegistrationFailedText.appendChild(newRegistrationFailedLabel);
-    newRegistrationFailedText.innerHTML += "Il y a ";
-    newRegistrationFailedText.appendChild(newRegistrationFailedErrors);
-    newRegistrationFailedText.innerHTML +=
-      " dans votre formulaire d'inscription.";
-    newRegistrationFailed.appendChild(newRegistrationFailedText);
-
-    let closeButton = document.createElement("button");
-    closeButton.className = "p-2 btn-close cursor-pointer";
-    closeButton.addEventListener("click", function (e) {
-      newRegistrationFailed.remove();
-    });
-    newRegistrationFailed.appendChild(closeButton);
-
-    registrationBox.appendChild(newRegistrationFailed);
+    resetAlerts("registrationAlertBox")
+    createAlert(
+      registrationBox,
+      "registrationAlertBox",
+      "registrationFailedAlert",
+      "Erreur lors de l'envoi du formulaire",
+      "Il y a " + errorsPrint + ". dans votre formulaire d'inscription.",
+      "danger"
+    );
   }
 });
