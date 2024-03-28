@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $page = !empty($_GET['page']) ? $_GET['page'] : 'index';
 
 $path = "../src/pages/$page.php";

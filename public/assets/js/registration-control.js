@@ -1,9 +1,18 @@
-
 // FONCTIONS "ALERTES"
 function resetAlerts(alertBoxId) {
   let alertBox = document.querySelector("#" + alertBoxId);
   if (alertBox != null) {
     alertBox.remove();
+  }
+}
+
+function removeAlert(alertId, closeButtonId) {
+  let alert = document.querySelector("#" + alertId);
+  let closeButton = document.querySelector("#" + closeButtonId);
+  if (closeButton != null) {
+    closeButton.addEventListener("click", function (e) {
+      alert.remove();
+    });
   }
 }
 
@@ -18,7 +27,9 @@ function createAlert(box, alertBoxId, alertId, label, message, importance) {
   let alertDiv = document.createElement("div");
   alertDiv.id = alertId;
   alertDiv.className =
-    "mb-1 py-1 gap-2 alert alert-" + importance + " d-flex justify-content-between";
+    "mb-1 py-1 gap-2 alert alert-" +
+    importance +
+    " d-flex justify-content-between";
 
   let messageText = document.createElement("p");
   messageText.className = "m-1";
@@ -30,6 +41,7 @@ function createAlert(box, alertBoxId, alertId, label, message, importance) {
   alertDiv.appendChild(messageText);
 
   let closeButton = document.createElement("button");
+  closeButton.type = "button";
   closeButton.id = alertId + "Close";
   closeButton.className = "p-2 btn-close cursor-pointer";
   closeButton.addEventListener("click", function (e) {
@@ -73,7 +85,7 @@ async function checkPseudo(pseudoBox, pseudo, pseudoSate, submit) {
       );
     }
 
-    if (!/^[a-zA-Z0-9_]+$/.test(pseudo.value)) {
+    if (!/^[a-zA-Z0-9_]/.test(pseudo.value)) {
       errors++;
       createAlert(
         pseudoBox,
@@ -86,7 +98,7 @@ async function checkPseudo(pseudoBox, pseudo, pseudoSate, submit) {
     }
 
     try {
-      const existingPseudo = await checkExistingPseudo(pseudo.value);
+      const existingPseudo = await checkExistingPseudo();
       if (existingPseudo["nb"] == 1) {
         errors++;
         createAlert(
@@ -130,7 +142,7 @@ function checkPseudoLength(pseudo, pseudoLength) {
   pseudoLength.innerHTML = pseudo.value.length + "/20";
   if (pseudo.value.length >= 3 && pseudo.value.length <= 20) {
     pseudoLength.className = "mb-2 py-0 alert alert-success ";
-  } else if(pseudo.value.length > 0) {
+  } else if (pseudo.value.length > 0) {
     pseudoLength.className = "mb-2 py-0 alert alert-warning";
   } else {
     pseudoLength.className = "mb-2 py-0 alert alert-light";
@@ -214,7 +226,6 @@ async function checkEmail(emailBox, email, emailSate, submit) {
   }
 }
 
-
 // FONCTIONS "MOT DE PASSE"
 function checkPassword(passwordBox, password, passwordSate, submit) {
   resetAlerts("passwordAlertBox");
@@ -235,7 +246,7 @@ function checkPassword(passwordBox, password, passwordSate, submit) {
     }
 
     if (
-      !/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,40}$/.test(
+      !/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/.test(
         password.value
       )
     ) {
@@ -273,45 +284,61 @@ function checkPassword(passwordBox, password, passwordSate, submit) {
   }
 }
 
-function checkPasswordLength(password, passwordLength, passwordStrengthLabel, passwordStrength) {
+function checkPasswordLength(
+  password,
+  passwordLength,
+  passwordStrengthLabel,
+  passwordStrength
+) {
   passwordLength.innerHTML = password.value.length + "/40";
   if (password.value.length >= 8 && password.value.length <= 40) {
     passwordLength.className = "mb-2 py-0 alert alert-success ";
-  } else if(password.value.length > 0) {
+  } else if (password.value.length > 0) {
     passwordLength.className = "mb-2 py-0 alert alert-warning";
   } else {
     passwordLength.className = "mb-2 py-0 alert alert-light";
   }
 
-  if(password.value.length > 0){
-    if (/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password.value)) {
-      if (/^(?=.*?[A-Z]{3})(?=.*?[a-z]{3})(?=.*?[0-9]{3})(?=.*?[#?!@$%^&*-]{3}).{16,}$/.test(password.value)) {
-        passwordStrength.style.width = '100%';
+  if (password.value.length > 0) {
+    if (
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
+        password.value
+      )
+    ) {
+      if (
+        /^(?=.*?[A-Z]{3})(?=.*?[a-z]{3})(?=.*?[0-9]{3})(?=.*?[#?!@$%^&*-]{3}).{16,}$/.test(
+          password.value
+        )
+      ) {
+        passwordStrength.style.width = "100%";
         passwordStrength.className = "progress-bar bg-success";
-        passwordStrengthLabel.innerHTML = 'Très fort';
+        passwordStrengthLabel.innerHTML = "Très fort";
         passwordStrengthLabel.className = "fw-bold text-success";
-      } else if (/^(?=.*?[A-Z]{2})(?=.*?[a-z]{2})(?=.*?[0-9]{2})(?=.*?[#?!@$%^&*-]{2}).{12,}$/.test(password.value)) {
-        passwordStrength.style.width = '75%';
+      } else if (
+        /^(?=.*?[A-Z]{2})(?=.*?[a-z]{2})(?=.*?[0-9]{2})(?=.*?[#?!@$%^&*-]{2}).{12,}$/.test(
+          password.value
+        )
+      ) {
+        passwordStrength.style.width = "75%";
         passwordStrength.className = "progress-bar bg-success";
-        passwordStrengthLabel.innerHTML = 'Fort';
+        passwordStrengthLabel.innerHTML = "Fort";
         passwordStrengthLabel.className = "fw-bold text-success";
       } else {
-        passwordStrength.style.width = '50%';
+        passwordStrength.style.width = "50%";
         passwordStrength.className = "progress-bar bg-warning";
-        passwordStrengthLabel.innerHTML = 'Moyen';
+        passwordStrengthLabel.innerHTML = "Moyen";
         passwordStrengthLabel.className = "fw-bold text-warning";
       }
-      
     } else {
-      passwordStrength.style.width = '25%';
+      passwordStrength.style.width = "25%";
       passwordStrength.className = "progress-bar bg-danger";
-      passwordStrengthLabel.innerHTML = 'Insuffisant';
+      passwordStrengthLabel.innerHTML = "Insuffisant";
       passwordStrengthLabel.className = "fw-bold text-danger";
     }
   } else {
-    passwordStrength.style.width = '0%';
+    passwordStrength.style.width = "0%";
     passwordStrength.className = "progress-bar bg-danger";
-    passwordStrengthLabel.innerHTML = '';
+    passwordStrengthLabel.innerHTML = "";
     passwordStrengthLabel.className = "fw-bold";
   }
 }
@@ -330,7 +357,7 @@ function checkAddress(addressBox, address, addressSate) {
         "addressAlertBox",
         "addressFormatAlert",
         "Attention",
-        "Le code postal doit comporter entre 5 chiffres.",
+        "Le code postal doit comporter 5 chiffres.",
         "warning"
       );
     }
@@ -354,7 +381,7 @@ function checkGender(genderBox, gender, genderSate) {
 
   let errors = 0;
 
-  if ( gender.id != "genderMan" && gender.id != "genderWoman") {
+  if (gender.id != "genderMan" && gender.id != "genderWoman") {
     errors++;
     createAlert(
       genderBox,
@@ -486,6 +513,11 @@ function checkCGU(CGUBox, CGU) {
 }
 
 // SCRIPTS "PSEUDO"
+removeAlert("pseudoLengthAlert", "pseudoLengthAlertClose");
+removeAlert("pseudoFormatAlert", "pseudoFormatAlertClose");
+removeAlert("pseudoExistingAlert", "pseudoExistingAlertClose");
+removeAlert("pseudoObligatoryAlert", "pseudoObligatoryAlertClose");
+
 const pseudoBox = document.querySelector("#pseudoBox");
 const pseudo = document.querySelector("#pseudo");
 const pseudoSate = document.querySelector("#pseudoSate");
@@ -503,7 +535,7 @@ pseudo.addEventListener("input", function (e) {
 const pseudoInfo = document.querySelector("#pseudoInfo");
 
 pseudoInfo.addEventListener("click", function (e) {
-  resetAlerts("pseudoAlertBox")
+  resetAlerts("pseudoAlertBox");
   createAlert(
     pseudoBox,
     "pseudoAlertBox",
@@ -515,6 +547,10 @@ pseudoInfo.addEventListener("click", function (e) {
 });
 
 // SCRIPTS "EMAIL"
+removeAlert("emailFormatAlert", "emailFormatAlertClose");
+removeAlert("emailExistingAlert", "emailExistingAlertClose");
+removeAlert("emailObligatoryAlert", "emailObligatoryAlertClose");
+
 const emailBox = document.querySelector("#emailBox");
 const email = document.querySelector("#email");
 const emailSate = document.querySelector("#emailSate");
@@ -526,7 +562,7 @@ email.addEventListener("blur", function (e) {
 const emailInfo = document.querySelector("#emailInfo");
 
 emailInfo.addEventListener("click", function (e) {
-  resetAlerts("emailAlertBox")
+  resetAlerts("emailAlertBox");
   createAlert(
     emailBox,
     "emailAlertBox",
@@ -538,6 +574,10 @@ emailInfo.addEventListener("click", function (e) {
 });
 
 // SCRIPTS "MOT DE PASSE"
+removeAlert("passwordLengthAlert", "passwordLengthAlertClose");
+removeAlert("passwordFormatAlert", "passwordFormatAlertClose");
+removeAlert("passwordObligatoryAlert", "passwordObligatoryAlertClose");
+
 const passwordBox = document.querySelector("#passwordBox");
 const password = document.querySelector("#password");
 const passwordSate = document.querySelector("#passwordSate");
@@ -551,7 +591,12 @@ const passwordStrengthLabel = document.querySelector("#passwordStrengthLabel");
 const passwordStrength = document.querySelector("#passwordStrength");
 
 password.addEventListener("input", function (e) {
-  checkPasswordLength(password, passwordLength, passwordStrengthLabel, passwordStrength);
+  checkPasswordLength(
+    password,
+    passwordLength,
+    passwordStrengthLabel,
+    passwordStrength
+  );
 });
 
 const passwordVisibility = document.querySelector("#passwordVisibility");
@@ -571,7 +616,7 @@ passwordVisibility.addEventListener("click", function () {
 const passwordInfo = document.querySelector("#passwordInfo");
 
 passwordInfo.addEventListener("click", function (e) {
-  resetAlerts("passwordAlertBox")
+  resetAlerts("passwordAlertBox");
   createAlert(
     passwordBox,
     "passwordAlertBox",
@@ -583,6 +628,8 @@ passwordInfo.addEventListener("click", function (e) {
 });
 
 // SCRIPTS "CODE POSTAL"
+removeAlert("addressFormatAlert", "addressFormatAlertClose");
+
 const addressBox = document.querySelector("#addressBox");
 const address = document.querySelector("#address");
 const addressSate = document.querySelector("#addressSate");
@@ -594,7 +641,7 @@ address.addEventListener("blur", function (e) {
 const addressInfo = document.querySelector("#addressInfo");
 
 addressInfo.addEventListener("click", function (e) {
-  resetAlerts("addressAlertBox")
+  resetAlerts("addressAlertBox");
   createAlert(
     addressBox,
     "addressAlertBox",
@@ -606,6 +653,8 @@ addressInfo.addEventListener("click", function (e) {
 });
 
 // SCRIPTS "GENRE"
+removeAlert("genderExistingAlert", "genderExistingAlertClose");
+
 const genderBox = document.querySelector("#genderBox");
 const genders = document.querySelectorAll('input[type="radio"]');
 const genderSate = document.querySelector("#genderSate");
@@ -630,7 +679,7 @@ resetGender.addEventListener("click", function (e) {
 const genderInfo = document.querySelector("#genderInfo");
 
 genderInfo.addEventListener("click", function (e) {
-  resetAlerts("genderAlertBox")
+  resetAlerts("genderAlertBox");
   createAlert(
     genderBox,
     "genderAlertBox",
@@ -642,6 +691,11 @@ genderInfo.addEventListener("click", function (e) {
 });
 
 // SCRIPTS "DATE DE NAISSANCE"
+removeAlert("birthFormatAlert", "birthFormatAlertClose");
+removeAlert("birthDateAlert", "birthDateAlertClose");
+removeAlert("birthMaxDateAlert", "birthMaxDateAlertClose");
+removeAlert("birthFutureAlert", "birthFutureAlertClose");
+
 const birthBox = document.querySelector("#birthBox");
 const birth = document.querySelector("#birth");
 const birthSate = document.querySelector("#birthSate");
@@ -653,7 +707,7 @@ birth.addEventListener("blur", function (e) {
 const birthInfo = document.querySelector("#birthInfo");
 
 birthInfo.addEventListener("click", function (e) {
-  resetAlerts("birthAlertBox")
+  resetAlerts("birthAlertBox");
   createAlert(
     birthBox,
     "birthAlertBox",
@@ -665,6 +719,8 @@ birthInfo.addEventListener("click", function (e) {
 });
 
 // SCRIPTS "CONDITIONS GÉNÉRALES D'UTILISATION"
+removeAlert("CGUObligatoryAlert", "CGUObligatoryAlertClose");
+
 const CGUBox = document.querySelector("#CGUBox");
 const CGU = document.querySelector("#CGU");
 
@@ -689,7 +745,9 @@ formSubmit.addEventListener("click", async function (e) {
 
   validatedFields.push(await checkPseudo(pseudoBox, pseudo, pseudoSate, true));
   validatedFields.push(await checkEmail(emailBox, email, emailSate, true));
-  validatedFields.push(checkPassword(passwordBox, password, passwordSate, true));
+  validatedFields.push(
+    checkPassword(passwordBox, password, passwordSate, true)
+  );
   validatedFields.push(checkAddress(addressBox, address, addressSate));
   genders.forEach((gender) => {
     if (gender.checked) {
@@ -718,13 +776,13 @@ formSubmit.addEventListener("click", async function (e) {
   if (formValidated) {
     document.querySelector("#form").submit();
   } else {
-    resetAlerts("registrationAlertBox")
+    resetAlerts("registrationAlertBox");
     createAlert(
       registrationBox,
       "registrationAlertBox",
       "registrationFailedAlert",
       "Erreur lors de l'envoi du formulaire",
-      "Il y a " + errorsPrint + ". dans votre formulaire d'inscription.",
+      "Il y a " + errorsPrint + " dans votre formulaire d'inscription.",
       "danger"
     );
   }

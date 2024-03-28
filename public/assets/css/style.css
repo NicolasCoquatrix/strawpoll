@@ -3,3 +3,12 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
+.img-logo {
+  width: 40px;
+  height: auto;
+}
+
+.fa-icon-large {
+  font-size: 2rem;
+}

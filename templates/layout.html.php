@@ -10,10 +10,13 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="d-flex flex-column">
-    <header>
+    <header class="sticky-top">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="/">Strawpoll</a>
+                <a class="p-0 gap-2 navbar-brand d-flex align-items-center" href="/">
+                    <img src="assets/img/logo_100x100.webp" alt="logo" class="img-logo">
+                    <p class="mb-0">Strawpoll</p>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -21,21 +24,27 @@
                         <div class="navbar-nav d-flex justify-content-between w-100">
                             <div class="navbar-nav">
                                 <a class="nav-link <?php if($page == 'index'){echo 'active';} ?>" href="/">Accueil</a>
+                                <a class="nav-link <?php if($page == 'profil'){echo 'active';} ?>" href="/">Mon profil</a>
                                 <a class="nav-link <?php if($page == 'creer-formulaire'){echo 'active';} ?>" href="/">Créer un formulaire</a>
                             </div>
                             <div class="navbar-nav">
-                                <a class="btn btn-primary" href="/?page=<?= !empty($_SESSION['customer_id']) ? 'profil' : 'connexion' ?>"><?= !empty($_SESSION['customer_id']) ? $_SESSION['customer_pseudo'] : 'Connexion' ?></a>
+                                <a class="btn btn-primary" href="/?page=<?= !empty($_SESSION['customer_id']) ? 'compte' : 'connexion' ?>">
+                                <?php if(!empty($_SESSION['customer_id'])): ?>
+                                    <i class="fas fa-user-cog"></i> <?= $_SESSION['customer_pseudo'] ?>
+                                <?php else: ?>
+                                    <i class="fas fa-sign-in-alt"></i> Connexion
+                                <?php endif; ?>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </nav>
+        <hr class="m-0">
     </header>
     <main>
-        <div class="container py-4">
-            <?php require "$page.html.php"; ?>
-        </div>
+        <?php require "$page.html.php"; ?>
     </main>
     <footer class="footer mt-auto bg-dark py-4">
         <div class="container text-center">
