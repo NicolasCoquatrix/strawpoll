@@ -24,17 +24,23 @@
                         <div class="navbar-nav d-flex justify-content-between w-100">
                             <div class="navbar-nav">
                                 <a class="nav-link <?php if($page == 'index'){echo 'active';} ?>" href="/">Accueil</a>
-                                <a class="nav-link <?php if($page == 'profil'){echo 'active';} ?>" href="/">Mon profil</a>
-                                <a class="nav-link <?php if($page == 'creer-formulaire'){echo 'active';} ?>" href="/">Créer un formulaire</a>
+                                <a class="nav-link <?php if($page == 'profil'){echo 'active';} ?>" href="?page=profil">Mon profil</a>
+                                <a class="nav-link <?php if($page == 'creer-formulaire'){echo 'active';} ?>" href="?page=nouveau-formulaire">Créer un formulaire</a>
                             </div>
                             <div class="navbar-nav">
+                                <?php if(!isset($_GET['page']) || $_GET['page'] != 'compte'): ?>
                                 <a class="btn btn-primary" href="/?page=<?= !empty($_SESSION['customer_id']) ? 'compte' : 'connexion' ?>">
-                                <?php if(!empty($_SESSION['customer_id'])): ?>
-                                    <i class="fas fa-user-cog"></i> <?= $_SESSION['customer_pseudo'] ?>
-                                <?php else: ?>
-                                    <i class="fas fa-sign-in-alt"></i> Connexion
-                                <?php endif; ?>
+                                    <?php if(!empty($_SESSION['customer_id'])): ?>
+                                        <i class="fas fa-user-cog"></i> <?= $_SESSION['customer_pseudo'] ?>
+                                    <?php else: ?>
+                                        <i class="fas fa-sign-in-alt"></i> Connexion
+                                    <?php endif; ?>
                                 </a>
+                                <?php else: ?>
+                                    <a class="btn btn-danger" href="script.php?script=disconnection.php">
+                                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

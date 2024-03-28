@@ -8,14 +8,14 @@
                     <i class="d-flex align-items-center fas fa-user-plus fa-icon-large"></i>
                     <h1 class="mb-0 h2 text-center">Inscription</h1>
                 </div>
-                <form action="/?page=inscription" method="POST" id="form" name="form">
+                <form method="POST" id="form" name="form">
                     <div class="card-body">
 
                         <!-- PSEUDO -->
-                        <div class="mb-3" id="pseudoBox">
+                        <div id="pseudoBox">
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex gap-2">
-                                    <div class="mb-2 px-3 py-0 alert alert-light rounded" id="pseudoSate"></div>
+                                    <div class="mb-2 px-3 py-0 alert alert-light" id="pseudoSate"></div>
                                     <label for="pseudo" class="form-label">Pseudo <span class="text-danger">*</span></label>
                                     <i id="pseudoInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Le pseudo doit être unique et comporter entre 3 et 20 caractères alphanumérique, sans espace, le seul caractère spécial autorisé est le ( _ )."></i>
                                 </div>
@@ -34,10 +34,12 @@
                             <?php endif; ?>
                         </div>
 
+                        <hr class="my-2">
+
                         <!-- EMAIL -->
-                        <div class="mb-3" id="emailBox">
+                        <div id="emailBox">
                             <div class="d-flex gap-2">
-                                <div class="alert alert-light px-3 py-0 mb-2" id="emailSate"></div>
+                                <div class="px-3 py-0 mb-2 alert alert-light" id="emailSate"></div>
                                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                                 <i id="emailInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="L'email doit être unique."></i>
                             </div>
@@ -54,11 +56,13 @@
                             <?php endif; ?>
                         </div>
 
+                        <hr class="my-2">
+
                         <!-- MOT DE PASSE -->
-                        <div class="mb-3"  id="passwordBox">
+                        <div id="passwordBox">
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex gap-2">
-                                    <div class="alert alert-light px-3 py-0 mb-2" id="passwordSate"></div>
+                                    <div class="px-3 py-0 mb-2 alert alert-light" id="passwordSate"></div>
                                     <label for="password" class="form-label">Mot de passe <span class="text-danger">*</span></label>
                                     <i id="passwordInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Le mot de passe doit comporter entre 8 et 40 caractères et contenir au minimum : une minuscule, une majuscule, un chiffre et un caractère spécial ( # , ? , ! , @ , $ , % , ^ , & , * , - )."></i>
                                 </div>
@@ -86,10 +90,12 @@
                             <?php endif; ?>
                         </div>
 
+                        <hr class="my-2">
+
                         <!-- CODE POSTAL -->
-                        <div class="mb-3"  id="addressBox">
+                        <div id="addressBox">
                             <div class="d-flex gap-2">
-                                <div class="alert alert-light px-3 py-0 mb-2" id="addressSate"></div>
+                                <div class="px-3 py-0 mb-2 alert alert-light" id="addressSate"></div>
                                 <label for="address" class="form-label">Code postal</label>
                                 <i id="addressInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Ce champ est optionnel et sert à établir des statistiques."></i>
                             </div>
@@ -106,10 +112,12 @@
                             <?php endif; ?>
                         </div>
 
+                        <hr class="my-2">
+
                         <!-- GENRE -->
-                        <div class="mb-3"  id="genderBox">
+                        <div id="genderBox">
                             <div class="d-flex gap-2">
-                                <div class="alert alert-light px-3 py-0 mb-2" id="genderSate"></div>
+                                <div class="px-3 py-0 mb-2 alert alert-light" id="genderSate"></div>
                                 <p class="form-label">Genre</p>
                                 <i id="genderInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Ce champ est optionnel et sert à établir des statistiques."></i>
                             </div>
@@ -144,10 +152,12 @@
                             <?php endif; ?>
                         </div>
 
+                        <hr class="my-2">
+
                         <!-- DATE DE NAISSANCE -->
-                        <div class="mb-3"  id="birthBox">
+                        <div id="birthBox">
                             <div class="d-flex gap-2">
-                                <div class="alert alert-light px-3 py-0 mb-2" id="birthSate"></div>
+                                <div class="px-3 py-0 mb-2 alert alert-light" id="birthSate"></div>
                                 <label for="birth" class="form-label">Date de naissance</label>
                                 <i id="birthInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Ce champ est optionnel et sert à établir des statistiques."></i>
                             </div>
@@ -164,8 +174,10 @@
                             <?php endif; ?>
                         </div>
 
+                        <hr class="my-2">
+
                         <!-- CONDITIONS GÉNÉRALES D'UTILISATION -->
-                        <div class="mb-3"  id="CGUBox">
+                        <div id="CGUBox">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="CGU" id="CGU" required>
                                 <label class="form-check-label" for="CGU">
@@ -185,7 +197,7 @@
                         </div>
 
                         <!-- CHAMPS OBLIGATOIRES -->
-                        <p class="small mb-0">Les champs marqué d'un <span class="text-danger">*</span> sont obligatoires.</p>
+                        <p class="small mb-0">Les champs marqués d'un <span class="text-danger">*</span> sont obligatoires.</p>
                     </div>
                     <div class="card-footer d-flex justify-content-between gap-3">
 

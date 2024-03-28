@@ -16,7 +16,7 @@
                         </div>
 
                         <!-- MOT DE PASSE -->
-                        <div class="mb-3"  id="passwordBox">
+                        <div  id="passwordBox">
                             <label for="password" class="form-label">Mot de passe</label>
                             <div class="input-group mb-1">
                                 <input type="password" class="form-control" name="password" id="password" placeholder="Entrez votre mot de passe" required>

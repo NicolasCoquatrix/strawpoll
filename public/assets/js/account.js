@@ -53,4 +53,34 @@ function createAlert(box, alertBoxId, alertId, label, message, importance) {
   box.appendChild(alertBox);
 }
 
-// NOUVEAU
+// FONCTIONS "TEMPLATES"
+function renderTemplate(template, data) {
+  for (const [key, value] of Object.entries(data)) {
+      template = template.replace(new RegExp('{{\\s*' + key + '\\s*}}', 'g'), value);
+  }
+  return template;
+}
+
+// FORMULAIRE "INFORMATIONS PERSONNELLES"
+const infosCardBox = document.querySelector("#infosCardBox");
+const infosCard = document.querySelector("#infosCard");
+const editInfos = document.querySelector("#editInfos");
+
+editInfos.addEventListener("click", function (e) {
+  infosCard.remove();
+  const infosTemplate = document.querySelector("#infosTemplate");
+  const clonedinfosTemplate = document.importNode(infosTemplate, true);
+  infosCardBox.innerHTML = clonedinfosTemplate.innerHTML;
+});
+
+// FORMULAIRE "INFORMATIONS PERSONNELLES"
+const passwordCardBox = document.querySelector("#passwordCardBox");
+const passwordCard = document.querySelector("#passwordCard");
+const editPassword = document.querySelector("#editPassword");
+
+editPassword.addEventListener("click", function (e) {
+  passwordCard.remove();
+  const passwordTemplate = document.querySelector("#passwordTemplate");
+  const clonedPasswordTemplate = document.importNode(passwordTemplate, true);
+  passwordCardBox.innerHTML = clonedPasswordTemplate.innerHTML;
+});
