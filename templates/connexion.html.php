@@ -11,13 +11,19 @@
 
                         <!-- PSEUDO -->
                         <div class="mb-3" id="loginBox">
-                            <label for="login" class="form-label">Email ou pseudo</label>
+                            <div class="mb-2 gap-2 d-flex">
+                                <i class="my-auto fas fa-user"></i>
+                                <label for="login" class="mb-0 h5">Email ou pseudo</label>
+                            </div>
                             <input type="text" class="form-control" name="login" id="login" placeholder="Entrez votre email ou pseudo" value="<?= $login ?? '' ?>" required autocomplete="email">
                         </div>
 
                         <!-- MOT DE PASSE -->
                         <div  id="passwordBox">
-                            <label for="password" class="form-label">Mot de passe</label>
+                            <div class="mb-2 gap-2 d-flex">
+                                <i class="my-auto fas fa-lock"></i>
+                                <label for="password" class="mb-0 h5">Mot de passe</label>
+                            </div>
                             <div class="input-group mb-1">
                                 <input type="password" class="form-control" name="password" id="password" placeholder="Entrez votre mot de passe" required>
                                 <span class="p-0 input-group-text">

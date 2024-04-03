@@ -14,10 +14,11 @@
                         <!-- PSEUDO -->
                         <div id="pseudoBox">
                             <div class="d-flex justify-content-between">
-                                <div class="d-flex gap-2">
-                                    <div class="mb-2 px-3 py-0 alert alert-light" id="pseudoSate"></div>
-                                    <label for="pseudo" class="form-label">Pseudo <span class="text-danger">*</span></label>
-                                    <i id="pseudoInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Le pseudo doit être unique et comporter entre 3 et 20 caractères alphanumérique, sans espace, le seul caractère spécial autorisé est le ( _ )."></i>
+                                <div class="mb-2 d-flex gap-2">
+                                    <div class="px-3 py-0 mb-0 alert alert-light" id="pseudoSate"></div>
+                                    <i class="my-auto fas fa-user"></i>
+                                    <label for="pseudo" class="mb-0 h5">Pseudo <span class="text-danger">*</span></label>
+                                    <i id="pseudoInfo" class="p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Le pseudo doit être unique et comporter entre 3 et 20 caractères alphanumérique, sans espace, le seul caractère spécial autorisé est le ( _ )."></i>
                                 </div>
                                 <p class="mb-2 py-0 alert alert-light" id="pseudoLength">0/20</p>
                             </div>
@@ -38,11 +39,12 @@
 
                         <!-- EMAIL -->
                         <div id="emailBox">
-                            <div class="d-flex gap-2">
-                                <div class="px-3 py-0 mb-2 alert alert-light" id="emailSate"></div>
-                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                <i id="emailInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="L'email doit être unique."></i>
-                            </div>
+                        <div class="mb-2 d-flex gap-2">
+                            <div class="px-3 py-0 mb-0 alert alert-light" id="emailSate"></div>
+                            <i class="my-auto fas fa-envelope"></i>
+                            <label for="email" class="mb-0 h5">Email <span class="text-danger">*</span></label>
+                            <i id="emailInfo" class="p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="L'email doit être unique."></i>
+                        </div>
                             <input type="email" class="form-control" name="email" id="email" placeholder="Entrez votre email" value="<?= $email ?? '' ?>" required autocomplete="email">
                             <?php if(!empty($errors['email'])): ?>
                             <div id="emailAlertBox" class="mt-2">
@@ -61,10 +63,11 @@
                         <!-- MOT DE PASSE -->
                         <div id="passwordBox">
                             <div class="d-flex justify-content-between">
-                                <div class="d-flex gap-2">
-                                    <div class="px-3 py-0 mb-2 alert alert-light" id="passwordSate"></div>
-                                    <label for="password" class="form-label">Mot de passe <span class="text-danger">*</span></label>
-                                    <i id="passwordInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Le mot de passe doit comporter entre 8 et 40 caractères et contenir au minimum : une minuscule, une majuscule, un chiffre et un caractère spécial ( # , ? , ! , @ , $ , % , ^ , & , * , - )."></i>
+                                <div class="mb-2 d-flex gap-2">
+                                    <div class="px-3 py-0 mb-0 alert alert-light" id="passwordSate"></div>
+                                    <i class="my-auto fas fa-lock"></i>
+                                    <label for="password" class="mb-0 h5">Mot de passe</label>
+                                    <i id="passwordInfo" class="p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Le mot de passe doit comporter entre 8 et 40 caractères et contenir au minimum : une minuscule, une majuscule, un chiffre et un caractère spécial ( # , ? , ! , @ , $ , % , ^ , & , * , - )."></i>
                                 </div>
                                 <p class="mb-2 alert alert-light py-0" id="passwordLength">0/40</p>
                             </div>
@@ -94,10 +97,11 @@
 
                         <!-- CODE POSTAL -->
                         <div id="addressBox">
-                            <div class="d-flex gap-2">
-                                <div class="px-3 py-0 mb-2 alert alert-light" id="addressSate"></div>
-                                <label for="address" class="form-label">Code postal</label>
-                                <i id="addressInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Ce champ est optionnel et sert à établir des statistiques."></i>
+                            <div class="mb-2 d-flex gap-2">
+                                <div class="px-3 py-0 mb-0 alert alert-light" id="addressSate"></div>
+                                <i class="my-auto fas fa-map-marker-alt"></i>
+                                <label for="address" class="mb-0 h5">Code postal</label>
+                                <i id="addressInfo" class="p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Ce champ est optionnel et sert à établir des statistiques."></i>
                             </div>
                             <input type="number" class="form-control" name="address" id="address" placeholder="Entrez votre code postal." value="<?= $address ?? '' ?>" min="0" minlength="5" maxlength="5" autocomplete="postal-code">
                             <?php if(!empty($errors['address'])): ?>
@@ -116,10 +120,11 @@
 
                         <!-- GENRE -->
                         <div id="genderBox">
-                            <div class="d-flex gap-2">
-                                <div class="px-3 py-0 mb-2 alert alert-light" id="genderSate"></div>
-                                <p class="form-label">Genre</p>
-                                <i id="genderInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Ce champ est optionnel et sert à établir des statistiques."></i>
+                            <div class="mb-2 d-flex gap-2">
+                                <div class="px-3 py-0 mb-0 alert alert-light" id="genderSate"></div>
+                                <i class="my-auto fas fa-venus-mars"></i>
+                                <p class="mb-0 h5">Genre</p>
+                                <i id="genderInfo" class="p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Ce champ est optionnel et sert à établir des statistiques."></i>
                             </div>
                             <div class="input-group mb-2">
                                 <div class="gap-4 form-control d-flex">
@@ -156,10 +161,11 @@
 
                         <!-- DATE DE NAISSANCE -->
                         <div id="birthBox">
-                            <div class="d-flex gap-2">
-                                <div class="px-3 py-0 mb-2 alert alert-light" id="birthSate"></div>
-                                <label for="birth" class="form-label">Date de naissance</label>
-                                <i id="birthInfo" class="mb-2 p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Ce champ est optionnel et sert à établir des statistiques."></i>
+                            <div class="mb-2 d-flex gap-2">
+                                <div class="px-3 py-0 mb-0 alert alert-light" id="birthSate"></div>
+                                <i class="my-auto fas fa-calendar-alt"></i>
+                                <label for="birth" class="mb-0 h5">Date de naissance</label>
+                                <i id="birthInfo" class="p-0 d-flex align-items-center btn cursor-pointer fas fa-info-circle" title="Ce champ est optionnel et sert à établir des statistiques."></i>
                             </div>
                             <input type="date" class="form-control" name="birth" id="birth" max="<?= date("Y-m-d") ?>" value="<?= $birth ?? '' ?>" autocomplete="birthdate">
                             <?php if(!empty($errors['birth'])): ?>

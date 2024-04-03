@@ -7,6 +7,7 @@ $description = 'Page d\'inscription de Strapall.';
 
 if(!empty($_SESSION['customer_id'])){
     header('Location: /?page=compte');
+    exit;
 }
 
 if(isset($_POST['hidden_submit'])){
@@ -33,7 +34,7 @@ if(isset($_POST['hidden_submit'])){
         }
 
         // Test si le pseudo comporte que des lettres, des chiffres ou le caractère spécial ( _ ).",
-        if(!preg_match('/^[a-zA-Z0-9_]/', $pseudo)){
+        if(!preg_match('/^[a-zA-Z0-9_]+$/', $pseudo)){
             // Erreur : Format du pseudo incorrect
             $errors['pseudo']['pseudo_format'] = ['alert_id' => 'pseudoFormatAlert', 'message' => 'Le pseudo ne peux comporter que des lettres, des chiffres et le caractère spécial ( _ ).'];
         }
@@ -57,7 +58,7 @@ if(isset($_POST['hidden_submit'])){
         }
 
         // Teste si le format du mail est valide
-        if(!preg_match('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i', $email)){
+        if(!preg_match('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))+$/i', $email)){
             // Erreur : Format de l'email incorrect
             $errors['email']['email_format'] = ['alert_id' => 'emailFormatAlert', 'message' => 'Le format de l\'adresse mail est invalide.'];
         }
@@ -86,7 +87,7 @@ if(isset($_POST['hidden_submit'])){
         $errors['password']['password_obligatory'] = ['alert_id' => 'passwordObligatoryAlert', 'message' => 'Le champ mot de passe est obligatoire.'];
     }
 
-    // CODE POSTAL /^\d{5}$/
+    // CODE POSTAL
     if(!empty($_POST['address'])){
         $address = $_POST['address'];
 
@@ -183,5 +184,6 @@ if(isset($_POST['hidden_submit'])){
         $_SESSION['customer_pseudo'] = $pseudo;
         $_SESSION['customer_grade'] = '3';
         header('Location: /');
-            }
+        exit;
+    }
 }

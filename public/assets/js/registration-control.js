@@ -85,7 +85,7 @@ async function checkPseudo(pseudoBox, pseudo, pseudoSate, submit) {
       );
     }
 
-    if (!/^[a-zA-Z0-9_]/.test(pseudo.value)) {
+    if (!/^[a-zA-Z0-9_]+$/.test(pseudo.value)) {
       errors++;
       createAlert(
         pseudoBox,
@@ -95,24 +95,24 @@ async function checkPseudo(pseudoBox, pseudo, pseudoSate, submit) {
         "Le pseudo ne peux comporter que des lettres, des chiffres et le caractère spécial ( _ ).",
         "warning"
       );
-    }
-
-    try {
-      const existingPseudo = await checkExistingPseudo();
-      if (existingPseudo["nb"] == 1) {
-        errors++;
-        createAlert(
-          pseudoBox,
-          "pseudoAlertBox",
-          "pseudoExistingAlert",
-          "Attention",
-          "Ce pseudo est déjà utilisé.",
-          "warning"
-        );
+    } else {
+      try {
+        const existingPseudo = await checkExistingPseudo();
+        if (existingPseudo["nb"] == 1) {
+          errors++;
+          createAlert(
+            pseudoBox,
+            "pseudoAlertBox",
+            "pseudoExistingAlert",
+            "Attention",
+            "Ce pseudo est déjà utilisé.",
+            "warning"
+          );
+        }
+      } catch (error) {
+        console.error("Une erreur s'est produite : ", error);
+        throw error;
       }
-    } catch (error) {
-      console.error("Une erreur s'est produite : ", error);
-      throw error;
     }
   } else if (submit == true) {
     errors++;
@@ -125,15 +125,15 @@ async function checkPseudo(pseudoBox, pseudo, pseudoSate, submit) {
       "warning"
     );
   } else {
-    pseudoSate.className = "mb-2 px-3 py-0 alert alert-light";
+    pseudoSate.className = "mb-0 px-3 py-0 alert alert-light";
     return false;
   }
 
   if (errors == 0) {
-    pseudoSate.className = "mb-2 px-3 py-0 alert alert-success";
+    pseudoSate.className = "mb-0 px-3 py-0 alert alert-success";
     return true;
   } else {
-    pseudoSate.className = "mb-2 px-3 py-0 alert alert-warning";
+    pseudoSate.className = "mb-0 px-3 py-0 alert alert-warning";
     return false;
   }
 }
@@ -170,7 +170,7 @@ async function checkEmail(emailBox, email, emailSate, submit) {
 
   if (email.value.length != 0) {
     if (
-      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i.test(
+      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))+$/i.test(
         email.value
       )
     ) {
@@ -183,24 +183,24 @@ async function checkEmail(emailBox, email, emailSate, submit) {
         "Le format de l'adresse mail est invalide.",
         "warning"
       );
-    }
-
-    try {
-      const existingEmail = await checkExistingEmail();
-      if (existingEmail["nb"] == 1) {
-        errors++;
-        createAlert(
-          emailBox,
-          "emailAlertBox",
-          "emailExistingAlert",
-          "Attention",
-          "Cet email est déjà utilisé.",
-          "warning"
-        );
+    } else {
+      try {
+        const existingEmail = await checkExistingEmail();
+        if (existingEmail["nb"] == 1) {
+          errors++;
+          createAlert(
+            emailBox,
+            "emailAlertBox",
+            "emailExistingAlert",
+            "Attention",
+            "Cet email est déjà utilisé.",
+            "warning"
+          );
+        }
+      } catch (error) {
+        console.error("Une erreur s'est produite : ", error);
+        throw error;
       }
-    } catch (error) {
-      console.error("Une erreur s'est produite : ", error);
-      throw error;
     }
   } else if (submit == true) {
     errors++;
@@ -213,15 +213,15 @@ async function checkEmail(emailBox, email, emailSate, submit) {
       "warning"
     );
   } else {
-    emailSate.className = "mb-2 px-3 py-0 alert alert-light";
+    emailSate.className = "mb-0 px-3 py-0 alert alert-light";
     return false;
   }
 
   if (errors == 0) {
-    emailSate.className = "mb-2 px-3 py-0 alert alert-success";
+    emailSate.className = "mb-0 px-3 py-0 alert alert-success";
     return true;
   } else {
-    emailSate.className = "mb-2 px-3 py-0 alert alert-warning";
+    emailSate.className = "mb-0 px-3 py-0 alert alert-warning";
     return false;
   }
 }
@@ -271,15 +271,15 @@ function checkPassword(passwordBox, password, passwordSate, submit) {
       "warning"
     );
   } else {
-    passwordSate.className = "mb-2 px-3 py-0 alert alert-light";
+    passwordSate.className = "mb-0 px-3 py-0 alert alert-light";
     return false;
   }
 
   if (errors == 0) {
-    passwordSate.className = "mb-2 px-3 py-0 alert alert-success";
+    passwordSate.className = "mb-0 px-3 py-0 alert alert-success";
     return true;
   } else {
-    passwordSate.className = "mb-2 px-3 py-0 alert alert-warning";
+    passwordSate.className = "mb-0 px-3 py-0 alert alert-warning";
     return false;
   }
 }
@@ -363,14 +363,14 @@ function checkAddress(addressBox, address, addressSate) {
     }
 
     if (errors == 0) {
-      addressSate.className = "mb-2 px-3 py-0 alert alert-success";
+      addressSate.className = "mb-0 px-3 py-0 alert alert-success";
       return true;
     } else {
-      addressSate.className = "mb-2 px-3 py-0 alert alert-warning";
+      addressSate.className = "mb-0 px-3 py-0 alert alert-warning";
       return false;
     }
   } else {
-    addressSate.className = "mb-2 px-3 py-0 alert alert-light";
+    addressSate.className = "mb-0 px-3 py-0 alert alert-light";
     return true;
   }
 }
@@ -394,10 +394,10 @@ function checkGender(genderBox, gender, genderSate) {
   }
 
   if (errors == 0) {
-    genderSate.className = "mb-2 px-3 py-0 alert alert-success";
+    genderSate.className = "mb-0 px-3 py-0 alert alert-success";
     return true;
   } else {
-    genderSate.className = "mb-2 px-3 py-0 alert alert-warning";
+    genderSate.className = "mb-0 px-3 py-0 alert alert-warning";
     return false;
   }
 }
@@ -474,14 +474,14 @@ function checkBirth(birthBox, birth, birthSate) {
     }
 
     if (errors == 0) {
-      birthSate.className = "mb-2 px-3 py-0 alert alert-success";
+      birthSate.className = "mb-0 px-3 py-0 alert alert-success";
       return true;
     } else {
-      birthSate.className = "mb-2 px-3 py-0 alert alert-warning";
+      birthSate.className = "mb-0 px-3 py-0 alert alert-warning";
       return false;
     }
   } else {
-    birthSate.className = "mb-2 px-3 py-0 alert alert-light";
+    birthSate.className = "mb-0 px-3 py-0 alert alert-light";
     birth.value = "";
     return true;
   }
@@ -672,7 +672,7 @@ const resetGender = document.querySelector("#resetGender");
 resetGender.addEventListener("click", function (e) {
   genders.forEach((gender) => {
     gender.checked = false;
-    genderSate.className = "mb-2 px-3 py-0 alert alert-light";
+    genderSate.className = "mb-0 px-3 py-0 alert alert-light";
   });
 });
 
@@ -731,10 +731,6 @@ CGU.addEventListener("change", function (e) {
 // SCRIPTS "ENVOI DU FORMULAIRE"
 const registrationBox = document.querySelector("#registrationBox");
 const registrationAlert = document.querySelector("#registrationAlert");
-
-if (registrationAlert != null) {
-}
-
 const formSubmit = document.querySelector("#formSubmit");
 
 formSubmit.addEventListener("click", async function (e) {

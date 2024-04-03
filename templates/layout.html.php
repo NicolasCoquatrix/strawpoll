@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="d-flex flex-column">
+<body class="min-vh-100 d-flex flex-column">
     <header class="sticky-top">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
@@ -49,7 +49,7 @@
         </nav>
         <hr class="m-0">
     </header>
-    <main>
+    <main class="d-flex flex-grow-1">
         <?php require "$page.html.php"; ?>
     </main>
     <footer class="footer mt-auto bg-dark py-4">

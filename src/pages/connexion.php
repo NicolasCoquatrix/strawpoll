@@ -5,6 +5,7 @@ $description = 'Page de connexion de Strapall.';
 
 if(!empty($_SESSION['customer_id'])){
     header('Location: /?page=compte');
+    exit;
 }
 
 if(isset($_POST['form_submit'])){
@@ -28,6 +29,7 @@ if(isset($_POST['form_submit'])){
                 $_SESSION['customer_pseudo'] = $customer['customer_pseudo'];
                 $_SESSION['customer_grade'] = $customer['grade_id'];
                 header('Location: /');
+                exit;
             }
         }
     }
