@@ -1,9 +1,7 @@
 // RECUPERER LES INFOS DE L'UTILISATEUR
 async function checkCustomer() {
   try {
-    const answer = await fetch(
-      "assets/json/json.customer-id-check.php"
-    );
+    const answer = await fetch("ajax.php?ajax=json.customer-id-check");
     const customer = await answer.json();
     return customer;
   } catch (error) {
@@ -70,21 +68,26 @@ function createAlert(box, alertBoxId, alertId, label, message, importance) {
 // FONCTIONS "TEMPLATES"
 function renderTemplate(template, data) {
   for (const [key, value] of Object.entries(data)) {
-      template = template.replace(new RegExp('{{\\s*' + key + '\\s*}}', 'g'), value);
+    template = template.replace(
+      new RegExp("{{\\s*" + key + "\\s*}}", "g"),
+      value
+    );
   }
   return template;
 }
 
 // FONCTIONS "PSEUDO"
 async function checkExistingPseudo() {
-  let ckeckPseudo = '';
+  let ckeckPseudo = "";
   let customer = await checkCustomer();
   if (customer["customer_pseudo"].toLowerCase() != pseudo.value.toLowerCase()) {
     ckeckPseudo = pseudo.value;
   }
 
   try {
-    const answer = await fetch("assets/json/json.pseudo-check.php?pseudo=" + ckeckPseudo);
+    const answer = await fetch(
+      "ajax.php?ajax=json.pseudo-check&value=" + encodeURIComponent(ckeckPseudo)
+    );
     const data = await answer.json();
     return data;
   } catch (error) {
@@ -177,7 +180,7 @@ function checkPseudoLength(pseudo, pseudoLength) {
 
 // FONCTIONS "EMAIL"
 async function checkExistingEmail() {
-  let ckeckEmail = '';
+  let ckeckEmail = "";
   let customer = await checkCustomer();
   if (customer["customer_email"].toLowerCase() != email.value.toLowerCase()) {
     ckeckEmail = email.value;
@@ -185,7 +188,7 @@ async function checkExistingEmail() {
 
   try {
     const answer = await fetch(
-      "assets/json/json.email-check.php?email=" + ckeckEmail
+      "ajax.php?ajax=json.email-check&value=" + encodeURIComponent(ckeckEmail)
     );
     const data = await answer.json();
     return data;
@@ -564,19 +567,22 @@ let passwordFormOpen = false;
 
 // FORMULAIRE "INFORMATIONS PERSONNELLES"
 const infosAlert = document.querySelector("#infosAlert");
-if(infosAlert != null){
+if (infosAlert != null) {
   const infosAlertClose = document.querySelector("#infosAlertClose");
-  infosAlertClose.addEventListener("click", function(e) {
+  infosAlertClose.addEventListener("click", function (e) {
     infosAlert.remove();
   });
 }
 
 editInfos.addEventListener("click", function (e) {
   infosFormOpen = true;
-  if (passwordFormOpen == false){
+  if (passwordFormOpen == false) {
     infosCard.remove();
     const infosFormTemplate = document.querySelector("#infosFormTemplate");
-    const clonedInfosFormTemplate = document.importNode(infosFormTemplate, true);
+    const clonedInfosFormTemplate = document.importNode(
+      infosFormTemplate,
+      true
+    );
     infosCardBox.innerHTML = clonedInfosFormTemplate.innerHTML;
 
     // SCRIPTS "PSEUDO"
@@ -722,7 +728,9 @@ editInfos.addEventListener("click", function (e) {
       let formValidated = true;
       let validatedFields = [];
 
-      validatedFields.push(await checkPseudo(pseudoBox, pseudo, pseudoSate, true));
+      validatedFields.push(
+        await checkPseudo(pseudoBox, pseudo, pseudoSate, true)
+      );
       validatedFields.push(await checkEmail(emailBox, email, emailSate, true));
       validatedFields.push(checkAddress(addressBox, address, addressSate));
       genders.forEach((gender) => {
@@ -757,12 +765,13 @@ editInfos.addEventListener("click", function (e) {
           "infosAlertBox",
           "infosFormOpenAlert",
           "Erreur lors de l'envoi du formulaire",
-          "Il y a " + errorsPrint + " dans votre formulaire de modification des informtions personnelles.",
+          "Il y a " +
+            errorsPrint +
+            " dans votre formulaire de modification des informtions personnelles.",
           "danger"
         );
       }
     });
-
   } else {
     resetAlerts("passwordAlertBox");
     createAlert(
@@ -778,19 +787,24 @@ editInfos.addEventListener("click", function (e) {
 
 // FORMULAIRE "MOT DE PASSE"
 const passwordAlert = document.querySelector("#passwordAlert");
-if(passwordAlert != null){
+if (passwordAlert != null) {
   const passwordAlertClose = document.querySelector("#passwordAlertClose");
-  passwordAlertClose.addEventListener("click", function(e) {
+  passwordAlertClose.addEventListener("click", function (e) {
     passwordAlert.remove();
   });
 }
 
 editPassword.addEventListener("click", function (e) {
   passwordFormOpen = true;
-  if (infosFormOpen == false){
+  if (infosFormOpen == false) {
     passwordCard.remove();
-    const passwordFormTemplate = document.querySelector("#passwordFormTemplate");
-    const clonedPasswordFormTemplate = document.importNode(passwordFormTemplate, true);
+    const passwordFormTemplate = document.querySelector(
+      "#passwordFormTemplate"
+    );
+    const clonedPasswordFormTemplate = document.importNode(
+      passwordFormTemplate,
+      true
+    );
     passwordCardBox.innerHTML = clonedPasswordFormTemplate.innerHTML;
 
     // SCRIPTS "ANCIEN MOT DE PASSE"
@@ -802,7 +816,9 @@ editPassword.addEventListener("click", function (e) {
       checkOldPassword(oldPasswordBox, oldPassword, oldPasswordSate, false);
     });
 
-    const oldPasswordVisibility = document.querySelector("#oldPasswordVisibility");
+    const oldPasswordVisibility = document.querySelector(
+      "#oldPasswordVisibility"
+    );
 
     oldPasswordVisibility.addEventListener("click", function () {
       if (oldPassword.type === "password") {
@@ -826,7 +842,9 @@ editPassword.addEventListener("click", function (e) {
     });
 
     const newPasswordLength = document.querySelector("#newPasswordLength");
-    const newPasswordStrengthLabel = document.querySelector("#newPasswordStrengthLabel");
+    const newPasswordStrengthLabel = document.querySelector(
+      "#newPasswordStrengthLabel"
+    );
     const newPasswordStrength = document.querySelector("#newPasswordStrength");
 
     newPassword.addEventListener("input", function (e) {
@@ -838,7 +856,9 @@ editPassword.addEventListener("click", function (e) {
       );
     });
 
-    const newPasswordVisibility = document.querySelector("#newPasswordVisibility");
+    const newPasswordVisibility = document.querySelector(
+      "#newPasswordVisibility"
+    );
 
     newPasswordVisibility.addEventListener("click", function () {
       if (newPassword.type === "password") {
@@ -907,7 +927,9 @@ editPassword.addEventListener("click", function (e) {
           "passwordAlertBox",
           "passwordFormOpenAlert",
           "Erreur lors de l'envoi du formulaire",
-          "Il y a " + errorsPrint + " dans votre formulaire de modification du mot de passe.",
+          "Il y a " +
+            errorsPrint +
+            " dans votre formulaire de modification du mot de passe.",
           "danger"
         );
       }

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
     <title>Strawpoll | <?= $title ?? '' ?></title>
     <meta name="description" content="<?= $description ?? '' ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -25,7 +26,7 @@
                             <div class="navbar-nav">
                                 <a class="nav-link <?php if($page == 'index'){echo 'active';} ?>" href="/">Accueil</a>
                                 <a class="nav-link <?php if($page == 'profil'){echo 'active';} ?>" href="?page=profil">Mon profil</a>
-                                <a class="nav-link <?php if($page == 'creer-formulaire'){echo 'active';} ?>" href="?page=nouveau-formulaire">Créer un formulaire</a>
+                                <a class="nav-link <?php if($page == 'mes-sondages'){echo 'active';} ?>" href="?page=mes-sondages">Mes sondages</a>
                             </div>
                             <div class="navbar-nav">
                                 <?php if(!isset($_GET['page']) || $_GET['page'] != 'compte'): ?>
@@ -37,7 +38,7 @@
                                     <?php endif; ?>
                                 </a>
                                 <?php else: ?>
-                                    <a class="btn btn-danger" href="script.php?script=disconnection.php">
+                                    <a class="btn btn-danger" href="script.php?script=disconnection">
                                         <i class="fas fa-sign-out-alt"></i> Déconnexion
                                     </a>
                                 <?php endif; ?>

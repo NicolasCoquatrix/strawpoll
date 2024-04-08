@@ -10,16 +10,18 @@
                     <div class="card-body">
 
                         <!-- PSEUDO -->
-                        <div class="mb-3" id="loginBox">
+                        <div id="loginBox">
                             <div class="mb-2 gap-2 d-flex">
                                 <i class="my-auto fas fa-user"></i>
-                                <label for="login" class="mb-0 h5">Email ou pseudo</label>
+                                <label for="login" class="mb-0 h5">Identifiant</label>
                             </div>
                             <input type="text" class="form-control" name="login" id="login" placeholder="Entrez votre email ou pseudo" value="<?= $login ?? '' ?>" required autocomplete="email">
                         </div>
 
+                        <hr class="my-2">
+
                         <!-- MOT DE PASSE -->
-                        <div  id="passwordBox">
+                        <div id="passwordBox">
                             <div class="mb-2 gap-2 d-flex">
                                 <i class="my-auto fas fa-lock"></i>
                                 <label for="password" class="mb-0 h5">Mot de passe</label>
@@ -40,7 +42,7 @@
                         </a>
 
                         <!-- BOUTON ENVOYER -->
-                        <button type="submit" class="btn btn-primary w-100" name="form_submit" id="formSubmit">
+                        <button type="submit" class="btn btn-success w-100" name="form_submit" id="formSubmit">
                             <i class="fas fa-sign-in-alt"></i> Se connecter
                         </button>
                     </div>
@@ -49,7 +51,7 @@
             <?php if(isset($connectionFailed)): ?>
                 <div id="connectionAlertBox" class="mt-2">
                     <div id="connectionFailedAlert" class="mb-1 py-1 gap-2 alert alert-danger d-flex justify-content-between">
-                        <p class="m-1"><span class="fw-bold">Connexion impossible : </span>Adresse mail ou mot de passe incorrect.</p>
+                        <p class="m-1"><span class="fw-bold">Connexion impossible : </span>Identifiant ou mot de passe incorrect.</p>
                         <button id="connectionFailedAlertClose" class="p-2 btn-close cursor-pointer"></button>
                     </div>
                 </div>
@@ -58,4 +60,4 @@
     </div>
 </div>
 
-<script src="assets/js/connection-control.js"></script>
+<script src="assets/js/connection.js"></script>

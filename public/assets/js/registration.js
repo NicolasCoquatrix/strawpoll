@@ -57,7 +57,8 @@ function createAlert(box, alertBoxId, alertId, label, message, importance) {
 async function checkExistingPseudo() {
   try {
     const answer = await fetch(
-      "assets/json/json.pseudo-check.php?pseudo=" + pseudo.value
+      "ajax.php?ajax=json.pseudo-check&value=" +
+        encodeURIComponent(pseudo.value)
     );
     const data = await answer.json();
     return data;
@@ -153,7 +154,7 @@ function checkPseudoLength(pseudo, pseudoLength) {
 async function checkExistingEmail() {
   try {
     const answer = await fetch(
-      "assets/json/json.email-check.php?email=" + email.value
+      "ajax.php?ajax=json.email-check&value=" + encodeURIComponent(email.value)
     );
     const data = await answer.json();
     return data;

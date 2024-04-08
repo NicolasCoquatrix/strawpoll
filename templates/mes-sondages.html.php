@@ -1,186 +1,18 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
 <div class="container py-4">
     <div class="row justify-content-center">
         <div class="mb-4">
-            <div class="card bg-dark">
-                <a href="?page=profil" class="gap-2 card-body d-flex justify-content-center text-decoration-none">
-                    <i class="d-flex align-items-center fas fa-user fa-icon-large text-light"></i>
-                    <p class="mb-0 h3 text-light">Voir mon profil public</p>
+            <div class="card bg-primary">
+                <a href="?page=nouveau-sondage" class="gap-2 card-body d-flex justify-content-center text-decoration-none">
+                    <i class="d-flex align-items-center fas fa-plus fa-icon-large text-light"></i>
+                    <p class="mb-0 h3 text-light">Créer un nouveau sondage</p>
                 </a>
             </div>
         </div>
     </div>
 
     <div class="row justify-content-center">
-    <h1 class="text-center">Mon compte</h1>
+    <h1 class="text-center">Mes sondages</h1>
 
-        <!-- GAUCHE -->
-        <div class="mb-4 col-lg-6">
-
-            <!-- SECTION INFORMATIONS PERSONNELLES -->
-            <div id="infosCardBox">
-                <div class="card" id="infosCard">
-                    <div class="gap-2 card-header d-flex justify-content-center">
-                        <i class="d-flex align-items-center fas fa-user-cog fa-icon-large"></i>
-                        <h2 class="mb-0 h3">Informations personnelles</h2>
-                    </div>
-                    <div class="card-body">
-
-                        <!-- Pseudo -->
-                        <div id="pseudoBox">
-                            <div class="mb-2 gap-2 d-flex">
-                                <i class="my-auto fas fa-user"></i>
-                                <h3 class="mb-0 h5">Pseudo</h3>
-                            </div>
-                            <p class="mb-0"><?= $customer['customer_pseudo'] ?></p>
-                        </div>
-
-                        <hr class="my-2">
-
-                        <!-- Email -->
-                        <div id="emailBox">
-                            <div class="mb-2 gap-2 d-flex">
-                                <i class="my-auto fas fa-envelope"></i>
-                                <h3 class="mb-0 h5">Email</h3>
-                            </div>
-                            <p class="mb-0"><?= $customer['customer_email'] ?></p>
-                        </div>
-
-                        <hr class="my-2">
-
-                        <!-- Code postal -->
-                        <div id="addressBox">
-                            <div class="mb-2 gap-2 d-flex">
-                                <i class="my-auto fas fa-map-marker-alt"></i>
-                                <h3 class="mb-0 h5">Code postale</h3>
-                            </div>
-                            <p class="mb-0"><?= $customer['customer_address'] ?? 'Non renseigné.' ?></p>
-                        </div>
-
-                        <hr class="my-2">
-
-                        <!-- Genre -->
-                        <div id="genderBox">
-                            <div class="mb-2 gap-2 d-flex">
-                                <i class="my-auto fas fa-venus-mars"></i>
-                                <h3 class="mb-0 h5">Genre</h3>
-                            </div>
-                            <p class="mb-0"><?= $customer['customer_gender_formatted'] ?? 'Non renseigné.' ?></p>
-                        </div>
-
-                        <hr class="my-2">
-
-                        <!-- Date de naissance -->
-                        <div id="birthBox">
-                            <div class="mb-2 gap-2 d-flex">
-                                <i class="my-auto fas fa-calendar-alt"></i>
-                                <h3 class="mb-0 h5">Date de naissance</h3>
-                            </div>
-                            <p class="mb-0"><?= $customer['customer_birth_formatted'] ?? 'Non renseigné.' ?></p>
-                        </div>
-
-                    </div>
-                    <div class="card-footer d-flex justify-content-between gap-3">
-
-                        <!-- Modifier informations personnelles -->
-                        <button type="button" class="btn btn-secondary w-100" id="editInfos">
-                            <i class="fas fa-edit"></i> Modifier mes informations
-                        </button>
-                    </div>
-                </div>
-                <?php if(isset($_SESSION['infosModified'])): ?>
-                <div id="infosAlertBox" class="mt-2">
-                    <div id="infosAlert" class="mb-1 py-1 gap-2 alert alert-success d-flex justify-content-between">
-                        <p class="m-1"><span class="fw-bold">Mise à jour réussi : </span>Vos informations personnelles ont bien été mises à jour.</p>
-                        <button id="infosAlertClose" class="p-2 btn-close cursor-pointer"></button>
-                    </div>
-                </div>
-                <?php unset($_SESSION['infosModified']); ?>
-                <?php endif; ?>
-                <?php if(isset($infosFailed)): ?>
-                <div id="infosAlertBox" class="mt-2">
-                    <div id="infosAlert" class="mb-1 py-1 gap-2 alert alert-danger d-flex justify-content-between">
-                        <p class="m-1"><span class="fw-bold">Echec de la mise à jour : </span>Une erreur est survenu lors de la mise à jour de vos informations personnelles.</p>
-                        <button id="infosAlertClose" class="p-2 btn-close cursor-pointer"></button>
-                    </div>
-                </div>
-                <?php endif; ?>
-            </div>
-        </div>
-
-        <!-- DROITE -->
-        <div class="mb-4 col-lg-6">
-
-            <!-- SECTION MOT DE PASSE -->
-            <div class="mb-4" id="passwordCardBox">
-                <div class="card" id="passwordCard">
-                    <div class="gap-2 card-header d-flex justify-content-center">
-                        <i class="d-flex align-items-center fas fa-user-lock fa-icon-large"></i>
-                        <h2 class="mb-0 h3">Mot de passe</h2>
-                    </div>
-                    <div class="card-body">
-
-                        <!-- Mot de passe -->
-                        <div id="passwordBox">
-                            <p class="mb-0 h5">••••••••</p>
-                        </div>
-
-                    </div>
-                    <div class="card-footer d-flex justify-content-between gap-3">
-
-                        <!-- Modifier mot de passe -->
-                        <button type="button" class="btn btn-secondary w-100" id="editPassword">
-                            <i class="fas fa-edit"></i> Modifier mon mot de passe
-                        </button>
-                    </div>
-                </div>
-                <?php if(isset($_SESSION['passwordModified'])): ?>
-                <div id="passwordAlertBox" class="mt-2">
-                    <div id="passwordAlert" class="mb-1 py-1 gap-2 alert alert-success d-flex justify-content-between">
-                        <p class="m-1"><span class="fw-bold">Mise à jour réussi : </span>Votre mot de passe a bien été mise à jour.</p>
-                        <button id="passwordAlertClose" class="p-2 btn-close cursor-pointer"></button>
-                    </div>
-                </div>
-                <?php unset($_SESSION['passwordModified']); ?>
-                <?php endif; ?>
-                <?php if(isset($passwordFailed)): ?>
-                <div id="passwordAlertBox" class="mt-2">
-                    <div id="passwordAlert" class="mb-1 py-1 gap-2 alert alert-danger d-flex justify-content-between">
-                        <p class="m-1"><span class="fw-bold">Echec de la mise à jour : </span>Une erreur est survenu lors de la mise à jour de votre mot de passe.</p>
-                        <button id="passwordAlertClose" class="p-2 btn-close cursor-pointer"></button>
-                    </div>
-                </div>
-                <?php endif; ?>
-            </div>
-
-            <!-- SECTION GRADE -->
-            <div id="gardeCardBox">
-                <div class="mb-4 card" id="gardeCard">
-                    <div class="gap-2 card-header d-flex justify-content-center">
-                        <i class="d-flex align-items-center fas fa-user-tag fa-icon-large"></i>
-                        <h2 class="mb-0 h3">Grade</h2>
-                    </div>
-                    <div class="card-body">
-
-                        <!-- Grade -->
-                        <div id="gradeBox">
-                            <p class="mb-0 h5"><?= $customer['customer_grade_formatted'] ?></p>
-                        </div>
-
-                    </div>
-                    <?php if($customer['grade_id'] != '1'): ?>
-                    <div class="card-footer d-flex justify-content-between gap-3">
-
-                        <!-- Promouvoir grade -->
-                        <a href="?page=promotion" class="btn btn-primary w-100" id="upgradeGrade">
-                            <i class="fas fa-arrow-up"></i> Demander une promotion
-                        </a>
-                    </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -380,4 +212,4 @@
     </div>
 </template>
 
-<script src="assets/js/account.js"></script>
+<script src="assets/js/account-control.js"></script>

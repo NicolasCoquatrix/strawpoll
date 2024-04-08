@@ -1,8 +1,9 @@
 <?php
 
-$script = !empty($_GET['script']) ? $_GET['script'] : '';
+$ajax = !empty($_GET['ajax']) ? $_GET['ajax'] : '';
+$value = !empty($_GET['value']) ? urldecode($_GET['value']) : '';
 
-$path = "../src/scripts/$script.php";
+$path = "../src/ajax/$ajax.php";
 if(file_exists($path)){
     $dbPath = '../src/data/db.sqlite';
     require '../src/data/db-connect.php';

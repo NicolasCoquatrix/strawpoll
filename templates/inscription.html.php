@@ -216,7 +216,7 @@
                         </a>
 
                         <!-- BOUTON ENVOYER -->
-                        <button type="submit" class="btn btn-primary w-100" name="form_submit" id="formSubmit">
+                        <button type="submit" class="btn btn-success w-100" name="form_submit" id="formSubmit">
                             <i class="fas fa-user-plus"></i> S'inscrire
                         </button>
                     </div>
@@ -226,4 +226,4 @@
     </div>
 </div>
 
-<script src="assets/js/registration-control.js"></script>
+<script src="assets/js/registration.js"></script>
