@@ -134,20 +134,6 @@ function checkChoice(choiceBox, choice, choiceState, index, submit) {
         }
       }
     }
-
-    if (choice.value.length < 2 || choice.value.length > 100) {
-      errors++;
-      createAlert(
-        choiceBox,
-        "choice" + index + "AlertBox",
-        "choice" + index + "LengthAlert",
-        "Attention",
-        "Le nom du choix doit comporter entre 2 et 100 caractères (Nombre de caractères actuel : " +
-          choice.value.length +
-          ").",
-        "warning"
-      );
-    }
   } else if (submit == true) {
     errors++;
     createAlert(
